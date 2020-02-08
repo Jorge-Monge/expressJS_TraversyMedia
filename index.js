@@ -9,9 +9,16 @@ const members = require("./Members");
 // Init middleware
 app.use(logger);
 
+// Body parser (for the response of POST)
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 // Set static folder
 app.use(express.static(path.join(__dirname, "Public")));
 
+/*  Routes created manually. It works, but it is better to move the
+//  routes to their own folder.
+//   
 // Create route
 app.get("/api/members", (req, res) => res.json(members));
 
@@ -26,6 +33,12 @@ app.get("/api/members/:id", (req, res) => {
       .json({ msg: `No member with the ID of ${req.params.id} found` });
   }
 });
+
+*/
+
+// Routes in their own folder
+// Members API Routes
+app.use("/api/members", require("./routes/api/members"));
 
 /*
 app.get("/", (req, res) => {
